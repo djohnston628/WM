@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WMAssess_DavidJ.Models;
-using WMAssess_DavidJ.Interfaces;
-using WMAssess_DavidJ.Mockdata;
-using WMAssess_DavidJ.Common;
+using WMAssess_DavidJ.Models.Interfaces;
+using WMAssess_DavidJ.Services;
+
 
 namespace ProductCatalogAPI.Controllers
 {
