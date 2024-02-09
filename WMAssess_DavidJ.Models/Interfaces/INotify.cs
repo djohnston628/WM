@@ -1,4 +1,4 @@
-﻿namespace WMAssess_DavidJ.Interfaces;
+﻿namespace WMAssess_DavidJ.Models.Interfaces;
 
 public interface INotify
 {

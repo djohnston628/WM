@@ -1,9 +1,7 @@
 ﻿using System.Reflection.Metadata.Ecma335;
-
-namespace WMAssess_DavidJ.Mockdata;
-
 using WMAssess_DavidJ.Models;
 
+namespace WMAssess_DavidJ.Services;
 public static class Mockdata
 {
     public static List<Buyer> _buyers = new List<Buyer>
