@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/WMAssess_DavidJ.props" />
-</Project>
