@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using WMAssess_DavidJ.Interfaces;
+using WMAssess_DavidJ.Models.Interfaces;
 
-namespace WMAssess_DavidJ.Common;
+namespace WMAssess_DavidJ.Services;
 
 public class Notification: INotify
 {
