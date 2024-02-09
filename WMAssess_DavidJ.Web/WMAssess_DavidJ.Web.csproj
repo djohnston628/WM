@@ -12,12 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models/" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="WMAssess_DavidJ.BusinessLogic\WMAssess_DavidJ.BusinessLogic.csproj" />
-    <ProjectReference Include="WMAssess_DavidJ.Models\WMAssess_DavidJ.Models.csproj" />
+    <ProjectReference Include="..\WMAssess_DavidJ.BusinessLogic\WMAssess_DavidJ.BusinessLogic.csproj" />
+    <ProjectReference Include="..\WMAssess_DavidJ.Models\WMAssess_DavidJ.Models.csproj" />
   </ItemGroup>
 
 </Project>
