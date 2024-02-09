@@ -1,0 +1,72 @@
+# Visual Studio temporary files
+.vs/
+.vscode/
+*/bin/
+*/obj/
+*.user
+*.vspscc
+*.vssscc
+*.pidb
+*.suo
+*.sln.docstates
+
+# ASP.NET and Visual Studio folders
+*/App_Data/
+*/Logs/
+*/Properties/
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.jfm
+*.vc.db
+*.VC.opendb
+*.rdl.data
+*.rdl.layout
+*.manifest
+*.res
+*.idb
+*.dll
+*.exe
+
+# NuGet
+packages/
+*.nupkg
+*.pfx
+*.snk
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio code
+.vscode/
