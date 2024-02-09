@@ -14,6 +14,8 @@
 */App_Data/
 */Logs/
 */Properties/
+*/bin/
+*/obj/
 *_i.c
 *_p.c
 *.ilk
