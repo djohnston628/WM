@@ -25,10 +25,10 @@ namespace ProductCatalogAPI.Controllers
         [HttpGet]
         public IActionResult GetProducts()
         {
-            List<Product>? _allProducts = _productService.GetAllProducts();
-            if (_allProducts != null)
+            BusinessResponse busResponse = _productService.GetAllProducts();
+            if (busResponse.Success)
             {
-                return Ok(_allProducts);
+                return Ok(busResponse.GetData<List<Product>>());
             }
 
             return NotFound();
