@@ -13,91 +13,89 @@ namespace ProductCatalogAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly INotify _notifier;
+        private readonly IProductService _productService;
 
-        // Mock data for buyers
-        private readonly List<Buyer> _buyers;
-
-        // for transient product data
-        private readonly List<Product> _products;
-
-        public ProductController()
+        public ProductController(IProductService productService)
         {
-            _notifier = new Notification();
-
-            _buyers = Mockdata._buyers;
-            _products = Mockdata._products;
+            _productService = productService;
         }
 
+        
         // GET: api/Product
         [HttpGet]
         public IActionResult GetProducts()
         {
-            return Ok(_products);
+            List<Product>? _allProducts = _productService.GetAllProducts();
+            if (_allProducts != null)
+            {
+                return Ok(_allProducts);
+            }
+
+            return NotFound();
         }
 
-        // GET: api/Product/5
-        [HttpGet("{sku}")]
-        public IActionResult GetProduct(string sku)
-        {
-            var product = _products.Find(p => p.SKU == sku);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(product);
-        }
+        //// GET: api/Product/5
+        //[HttpGet("{sku}")]
+        //public IActionResult GetProduct(string sku)
+        //{
+        //    var product = _products.Find(p => p.SKU == sku);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(product);
+        //}
 
         // POST: api/Product
-        [HttpPost]
-        public IActionResult CreateProduct([FromBody] Product product)
-        {
-            if (_products.Exists(p => p.SKU == product.SKU))
-            {
-                return Conflict("Product with the same SKU already exists.");
-            }
+        //[HttpPost]
+        //public IActionResult CreateProduct([FromBody] Product product)
+        //{
+        //    if (_products.Exists(p => p.SKU == product.SKU))
+        //    {
+        //        return Conflict("Product with the same SKU already exists.");
+        //    }
 
-            product.SKU = Guid.NewGuid().ToString();
-            _products.Add(product);
-            _notifier.Notify(product.SKU, "New product created.");
+        //    product.SKU = Guid.NewGuid().ToString();
+        //    _products.Add(product);
+        //    _notifier.Notify(product.SKU, "New product created.");
 
-            return CreatedAtAction(nameof(GetProduct), new { sku = product.SKU }, product);
-        }
+        //    return CreatedAtAction(nameof(GetProduct), new { sku = product.SKU }, product);
+        //}
 
-        // PUT: api/Product/5
-        [HttpPut("{sku}")]
-        public IActionResult UpdateProduct(string sku, [FromBody] Product product)
-        {
-            var existingProduct = _products.Find(p => p.SKU == sku);
-            if (existingProduct == null)
-            {
-                return NotFound();
-            }
+        //// PUT: api/Product/5
+        //[HttpPut("{sku}")]
+        //public IActionResult UpdateProduct(string sku, [FromBody] Product product)
+        //{
+        //    var existingProduct = _products.Find(p => p.SKU == sku);
+        //    if (existingProduct == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            existingProduct.Title = product.Title;
-            existingProduct.Description = product.Description;
-            existingProduct.BuyerId = product.BuyerId;
-            existingProduct.Active = product.Active;
+        //    existingProduct.Title = product.Title;
+        //    existingProduct.Description = product.Description;
+        //    existingProduct.BuyerId = product.BuyerId;
+        //    existingProduct.Active = product.Active;
 
-            _notifier.Notify(existingProduct.SKU, "Product updated.");
+        //    _notifier.Notify(existingProduct.SKU, "Product updated.");
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // DELETE: api/Product/5
-        [HttpDelete("{sku}")]
-        public IActionResult DeleteProduct(string sku)
-        {
-            var product = _products.Find(p => p.SKU == sku);
-            if (product == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Product/5
+        //[HttpDelete("{sku}")]
+        //public IActionResult DeleteProduct(string sku)
+        //{
+        //    var product = _products.Find(p => p.SKU == sku);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _products.Remove(product);
-            _notifier.Notify(product.SKU, "Product deleted.");
+        //    _products.Remove(product);
+        //    _notifier.Notify(product.SKU, "Product deleted.");
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
     }
 }
