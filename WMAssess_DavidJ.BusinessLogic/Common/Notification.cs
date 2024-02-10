@@ -9,4 +9,9 @@ public class Notification: INotify
     {
         Debug.WriteLine($"Sending message...{userId} - {message}");
     }
+
+    public void Notify(string message)
+    {
+        Debug.WriteLine(message);
+    }
 }
