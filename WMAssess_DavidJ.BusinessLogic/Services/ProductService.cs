@@ -5,15 +5,13 @@ namespace WMAssess_DavidJ.Services;
 
 public class ProductService : IProductService
 {
-    private Mockdata _mockData;
     private INotify _notification;
     private readonly IDataService _dataService;
 
 
-    public ProductService(IDataService dataService)
+    public ProductService(IDataService dataService, INotify notification)
     {
-        _mockData = new Mockdata();
-        _notification = new Notification();
+        _notification = notification;
         _dataService = dataService;
     }
 
@@ -107,13 +105,14 @@ public class ProductService : IProductService
             {
 
                 //---BusRule: Check if Buyer was changed, if so notify each buyer of change
+                List<Buyer> allBuyers = _dataService.GetBuyers();
                 if (!existingProduct.BuyerId.Equals(product.BuyerId, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    //---NOTE: Going to make an assumtion here that Buyers would be checked for existence before allowing a Buyer change
-                    //---       would either add logic here that would check if the new proposed buyer doesn't exist, then either Create one,
-                    //---       OR don't allow the change. Not going to write that relation integrity check for the assessment though
-                    Buyer? newBuyer = _mockData._buyers.Find(b => b.Id == product.BuyerId);
-                    Buyer? prevBuyer = _mockData._buyers.Find(b => b.Id == existingProduct.BuyerId);
+                    //---NOTE: Going to make an assumtion here that Buyers would be checked for existence before allowing a Buyer change.
+                    //---      Would add logic here that would check if the new proposed buyer doesn't exist, then either Create one,
+                    //---      OR don't allow the change. Not going to write that relation integrity check for the assessment though
+                    Buyer? newBuyer = allBuyers.Find(b => b.Id == product.BuyerId);
+                    Buyer? prevBuyer = allBuyers.Find(b => b.Id == existingProduct.BuyerId);
                     if (newBuyer != null && prevBuyer != null)
                     {
                         _notification.Notify("SysAdmin", $"Hello {newBuyer.Name}, the product {existingProduct.Title} has switched Buyer from {prevBuyer.Name} to {newBuyer.Name}");
@@ -126,7 +125,7 @@ public class ProductService : IProductService
                 if (existingProduct.Active && !product.Active)
                 {
                     existingProduct.Active = product.Active;
-                    Buyer? currentBuyer = _mockData._buyers.Find(b => b.Id == existingProduct.BuyerId);
+                    Buyer? currentBuyer = allBuyers.Find(b => b.Id == existingProduct.BuyerId);
                     if (currentBuyer != null)
                     {
                         _notification.Notify("SysAdmin", $"Hello {currentBuyer.Name}, the product {existingProduct.Title} has been set to Inactive");
