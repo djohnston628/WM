@@ -23,7 +23,13 @@ namespace WMAssess_DavidJ
             // Add services to the dependency injection container.
             // Example:
             // services.AddScoped<IMyService, MyService>();
+
+            //string filePathProducts = Configuration["FilePathProducts"] ?? "";
+            //services.AddSingleton(new DataService(filePathProducts));
+
+            services.AddScoped<IDataService, DataService>();
             services.AddScoped<IProductService, ProductService>();
+            
 
             services.AddControllers();
 

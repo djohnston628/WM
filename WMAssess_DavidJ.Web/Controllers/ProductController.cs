@@ -25,77 +25,64 @@ namespace ProductCatalogAPI.Controllers
         [HttpGet]
         public IActionResult GetProducts()
         {
-            List<Product>? _allProducts = _productService.GetAllProducts();
-            if (_allProducts != null)
+            BusinessResponse busResponse = _productService.GetAllProducts();
+            if (busResponse.Success)
             {
-                return Ok(_allProducts);
+                return Ok(busResponse.GetData<List<Product>>());
             }
 
-            return NotFound();
+            return NotFound(busResponse.Message);
         }
 
-        //// GET: api/Product/5
-        //[HttpGet("{sku}")]
-        //public IActionResult GetProduct(string sku)
-        //{
-        //    var product = _products.Find(p => p.SKU == sku);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(product);
-        //}
+        // GET: api/Product/5
+        [HttpGet("{sku}")]
+        public IActionResult GetProductBySKU(string sku)
+        {
+            BusinessResponse busResponse = _productService.GetProductBySku(sku);
+            if (busResponse.Success)
+            {
+                return Ok(busResponse.GetData<Product>());
+            }
+            return NotFound(busResponse.Message);
+        }
 
-        // POST: api/Product
-        //[HttpPost]
-        //public IActionResult CreateProduct([FromBody] Product product)
-        //{
-        //    if (_products.Exists(p => p.SKU == product.SKU))
-        //    {
-        //        return Conflict("Product with the same SKU already exists.");
-        //    }
+        //POST: api/Product
+        [HttpPost]
+        public IActionResult CreateProduct([FromBody] Product product)
+        {
+            BusinessResponse busResponse = _productService.CreateProduct(product);
+            if (busResponse.Success)
+            {
+                return CreatedAtAction(nameof(GetProductBySKU), new { sku = product.SKU }, product);
+            }
+            else
+            {
+                return Conflict(busResponse.Message);
+            }
+        }
 
-        //    product.SKU = Guid.NewGuid().ToString();
-        //    _products.Add(product);
-        //    _notifier.Notify(product.SKU, "New product created.");
+        // PUT: api/Product/5
+        [HttpPut("{sku}")]
+        public IActionResult UpdateProduct(string sku, [FromBody] Product product)
+        {
+            BusinessResponse busResponse = _productService.UpdateProduct(product);
+            if (busResponse.Success)
+            {
+                return Ok(busResponse.GetData<Product>());
+            }
+            return NotFound(busResponse.Message);
+        }
 
-        //    return CreatedAtAction(nameof(GetProduct), new { sku = product.SKU }, product);
-        //}
-
-        //// PUT: api/Product/5
-        //[HttpPut("{sku}")]
-        //public IActionResult UpdateProduct(string sku, [FromBody] Product product)
-        //{
-        //    var existingProduct = _products.Find(p => p.SKU == sku);
-        //    if (existingProduct == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    existingProduct.Title = product.Title;
-        //    existingProduct.Description = product.Description;
-        //    existingProduct.BuyerId = product.BuyerId;
-        //    existingProduct.Active = product.Active;
-
-        //    _notifier.Notify(existingProduct.SKU, "Product updated.");
-
-        //    return NoContent();
-        //}
-
-        //// DELETE: api/Product/5
-        //[HttpDelete("{sku}")]
-        //public IActionResult DeleteProduct(string sku)
-        //{
-        //    var product = _products.Find(p => p.SKU == sku);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _products.Remove(product);
-        //    _notifier.Notify(product.SKU, "Product deleted.");
-
-        //    return NoContent();
-        //}
+        // DELETE: api/Product/5
+        [HttpDelete("{sku}")]
+        public IActionResult DeleteProduct(string sku)
+        {
+            BusinessResponse busResponse = _productService.DeleteProductBySku(sku);
+            if (busResponse.Success)
+            {
+                return Ok(busResponse.Message);
+            }
+            return NotFound(busResponse.Message);
+        }
     }
 }

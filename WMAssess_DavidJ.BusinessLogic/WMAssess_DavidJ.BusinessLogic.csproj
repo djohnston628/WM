@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <Folder Include="Services/" />
+    <Folder Include="DataService\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WMAssess_DavidJ.Models\WMAssess_DavidJ.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="DataService\" />
+  </ItemGroup>
 </Project>

@@ -18,4 +18,10 @@
     <ProjectReference Include="..\WMAssess_DavidJ.Models\WMAssess_DavidJ.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data\" />
+  </ItemGroup>
 </Project>
