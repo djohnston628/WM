@@ -1,4 +1,4 @@
-# Washinton Mutual Code Assessment
+# Washington Mutual Code Assessment
 
 ## Author
 David Johnston
