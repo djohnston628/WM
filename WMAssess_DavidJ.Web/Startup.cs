@@ -27,8 +27,10 @@ namespace WMAssess_DavidJ
             //string filePathProducts = Configuration["FilePathProducts"] ?? "";
             //services.AddSingleton(new DataService(filePathProducts));
 
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddScoped<IDataService, DataService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<INotify, Notification>();
             
 
             services.AddControllers();

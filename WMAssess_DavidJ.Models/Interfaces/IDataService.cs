@@ -6,6 +6,8 @@ namespace WMAssess_DavidJ.Models.Interfaces
     {
         List<Product> GetProducts();
         void SaveProducts(List<Product> products);
+        List<Buyer> GetBuyers();
+        void SaveBuyer(List<Buyer> buyers);
     }
 }
 

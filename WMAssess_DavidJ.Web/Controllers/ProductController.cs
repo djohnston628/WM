@@ -9,7 +9,7 @@ using WMAssess_DavidJ.Services;
 
 namespace ProductCatalogAPI.Controllers
 {
-    [Route("api/ProductController")]
+    [Route("api/Product")]
     [ApiController]
     public class ProductController : ControllerBase
     {
