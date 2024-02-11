@@ -7,11 +7,14 @@ public class ProductService : IProductService
 {
     private Mockdata _mockData;
     private INotify _notification;
+    private readonly IDataService _dataService;
 
-    public ProductService()
+
+    public ProductService(IDataService dataService)
     {
         _mockData = new Mockdata();
         _notification = new Notification();
+        _dataService = dataService;
     }
 
     public BusinessResponse GetAllProducts()
@@ -19,7 +22,7 @@ public class ProductService : IProductService
         BusinessResponse response = new BusinessResponse();
         try
         {
-            response.SetData<List<Product>>(_mockData._products);
+            response.SetData<List<Product>>(_dataService.GetProducts());
             response.Success = true;
             return response;
         }
@@ -37,7 +40,7 @@ public class ProductService : IProductService
         BusinessResponse response = new BusinessResponse();
         try
         {
-            Product? product = _mockData._products.Find(p => p.SKU == sku);
+            Product? product = _dataService.GetProducts().Find(p => p.SKU == sku);
             if (product != null)
             {
                 response.SetData<Product>(product);
@@ -65,11 +68,23 @@ public class ProductService : IProductService
         BusinessResponse response = new BusinessResponse();
         try
         {
-            product.SKU = Guid.NewGuid().ToString();
-            _mockData._products.Add(product);
-            response.Success = true;
-            response.Message = "Product created";
-            response.SetData<Product>(product);
+            List<Product> allProducts = _dataService.GetProducts();
+            if (allProducts.Exists(p => p.SKU == product.SKU))
+            {
+                response.Success = false;
+                response.Message = "Product with the same SKU already exists.";
+            }
+            else
+            {
+                product.SKU = Guid.NewGuid().ToString();
+                allProducts.Add(product);
+                _dataService.SaveProducts(allProducts);
+
+                response.Success = true;
+                response.Message = "Product created";
+                response.SetData<Product>(product);
+            }
+            
             return response;
         }
         catch (Exception ex)
@@ -86,7 +101,8 @@ public class ProductService : IProductService
         BusinessResponse response = new BusinessResponse();
         try
         {
-            Product? existingProduct = _mockData._products.Find(p => p.SKU == product.SKU);
+            List<Product> allProducts = _dataService.GetProducts();
+            Product? existingProduct = allProducts.Find(p => p.SKU == product.SKU);
             if (existingProduct != null)
             {
 
@@ -120,6 +136,7 @@ public class ProductService : IProductService
 
                 existingProduct.Title = product.Title;
                 existingProduct.Description = product.Description;
+                _dataService.SaveProducts(allProducts);
 
                 response.SetData<Product>(existingProduct);
                 response.Success = true;
@@ -146,14 +163,25 @@ public class ProductService : IProductService
         BusinessResponse response = new BusinessResponse();
         try
         {
-            //var product = _products.Find(p => p.SKU == sku);
-            //if (product == null)
-            //{
-            //    return NotFound();
-            //}
+            List<Product> allProducts = _dataService.GetProducts();
+            Product? existingProduct = allProducts.Find(p => p.SKU == sku);
+            if (existingProduct != null)
+            {
+                string deletedMessage = $"Product {existingProduct.Title} has been deleted";
+                allProducts.Remove(existingProduct);
+                _dataService.SaveProducts(allProducts);
 
-            //_products.Remove(product);
-            //_notifier.Notify(product.SKU, "Product deleted.");
+                _notification.Notify(deletedMessage);
+                response.Success = true;
+                response.Message = deletedMessage;
+            }
+            else
+            {
+                string notFoundMsg = $"Product with SKU {sku} could not be found for deletion";
+                _notification.Notify(notFoundMsg);
+                response.Success = false;
+                response.Message = notFoundMsg;
+            }
 
             return response;
         }

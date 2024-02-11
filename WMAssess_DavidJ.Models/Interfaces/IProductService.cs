@@ -1,6 +1,4 @@
 ﻿using System;
-using WMAssess_DavidJ.Models;
-using WMAssess_DavidJ.Models.Interfaces;
 
 namespace WMAssess_DavidJ.Models.Interfaces
 {
