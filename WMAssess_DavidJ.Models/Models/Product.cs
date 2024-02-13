@@ -11,7 +11,7 @@ namespace WMAssess_DavidJ.Models;
         public string? Description { get; set; }
 
         [Required(ErrorMessage = "Product BuyerId is required")]
-        public string BuyerId { get; set; }
+        public required string BuyerId { get; set; }
         
         public bool Active { get; set; }
     }
