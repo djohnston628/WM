@@ -30,7 +30,7 @@ dotnet run
 ```
 
 ### Build and Run on Visual Studio
-To build and run this repository to your local machine using VSCODE:
+To build and run this repository to your local machine using Visual Studio:
 
 ```bash
 open WMAssess_DavidJ.sln file with Visual Studio
