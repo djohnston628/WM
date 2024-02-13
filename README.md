@@ -1,4 +1,4 @@
-# Washinton Mutual Code Assessment
+# Washington Mutual Code Assessment
 
 ## Author
 David Johnston
@@ -38,4 +38,9 @@ open WMAssess_DavidJ.sln file with Visual Studio
 
 ```bash
 Start application with/without debugging
+```
+
+```bash
+API services should startup automatically in a new browser swagger tab,
+but if you want to ping through postman or curl the api url will be: https://localhost:7004
 ```
