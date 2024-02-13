@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services/" />
+    <Folder Include="Services\" />
     <Folder Include="DataService\" />
   </ItemGroup>
 
@@ -15,10 +15,11 @@
     <ProjectReference Include="..\WMAssess_DavidJ.Models\WMAssess_DavidJ.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!-- <ItemGroup>
     <None Remove="DataService\" />
-  </ItemGroup>
+    <None Remove="Tests\" />
+  </ItemGroup> -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
   </ItemGroup>
 </Project>
